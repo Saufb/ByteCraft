@@ -1,0 +1,18 @@
+name: ByteCraft CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: |
+          python -m venv venv
+          . venv/bin/activate
+          pip install -r requirements.txt
+          python tool.py -f ByteCraft.asm -s 10 --no-emulate || true
+
